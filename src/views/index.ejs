@@ -1,8 +1,14 @@
 <%- include('header') -%>
 
 <ul>
-  <li>flokkur1</li>
-  <li>flokkur2</li>
+  <li><a href="/form-category">Senda inn flokk</a></li>
+  <li><a href="/form-question">Senda inn spurningu</a></li>
+</ul>
+
+<ul>
+  <% for (const category of categories) { %>
+    <li><a href="/spurningar/<%= category.id%>"><%= category.name %></a></li>
+  <% } %>
 </ul>
 
 <%- include('footer') -%>

@@ -1,5 +1,37 @@
-<%- include('header') -%>
+<%- include('header') -%> Spreyttu þig á spurningum!
 
-spurningaflokkur!
+<form id="quiz-form">
+  <ul>
+    <% for (let i = 0; i < questions.length; i++) { %>
+    <li>
+      <fieldset>
+        <legend>
+          <h2><%= questions[i].question %></h2>
+        </legend>
+        <ul>
+          <% const answers = questionAnswers[questions[i].id] %> <% for (let j =
+          0; j < answers.length; j++) { %>
+          <li>
+            <label>
+              <input
+                type="radio"
+                name="question-<%= i %>"
+                value="<%= j %>" <%=
+                answers[j].correct ? 'data-correct' : '' %>
+                tabindex="0"
+              />
+              <%= answers[j].answer %>
+            </label>
+          </li>
+          <% } %>
+        </ul>
+      </fieldset>
+    </li>
+    <% } %>
+  </ul>
+  <button type="submit" tabindex="0">Svara</button>
+</form>
+<div id="result"></div>
+<!-- <script src="quiz.js"></script> -->
 
 <%- include('footer') -%>

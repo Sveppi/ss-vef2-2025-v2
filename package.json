@@ -4,7 +4,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "dev": "node --env-file=.env --watch-path ./src src/server.js"
+        "dev": "node --env-file=.env --watch-path ./src src/server.js",
+        "setup": "node --env-file=.env ./src/setup.js"
     },
     "keywords": [],
     "author": "",

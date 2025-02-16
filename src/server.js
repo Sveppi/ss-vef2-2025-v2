@@ -3,6 +3,8 @@ import { router } from './routers.js';
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 const viewsPath = new URL('./views', import.meta.url).pathname;
 app.set('views', viewsPath);
 app.set('view engine', 'ejs');
