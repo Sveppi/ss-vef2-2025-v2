@@ -61,9 +61,6 @@
         {
           "answer": "Búið til `fetch` request kall sem tilgreinir að minnsta kosti URL; villuathugun á kalli og svari með tilliti til HTTP; eingöngu JSON gögn sótt í response með villuathugun.",
           "correct": false
-        },
-        {
-          "title": "Ógilt svar"
         }
       ]
     }

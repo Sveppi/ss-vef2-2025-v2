@@ -2,10 +2,13 @@
     "name": "ss-vef2-2025-v2",
     "type": "module",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "dev": "node --env-file=.env --watch-path ./src src/server.js",
-        "setup": "node --env-file=.env ./src/setup.js"
+        "setup": "node --env-file=.env ./src/setup.js",
+        "lint": "run-p lint:*",
+        "lint:eslint": "eslint ./src/**/*.js",
+        "lint:stylelint": "stylelint ./public/styles.css"
     },
     "keywords": [],
     "author": "",
@@ -14,11 +17,18 @@
     "dependencies": {
         "ejs": "^3.1.10",
         "express": "^4.21.2",
-        "pg": "^8.13.1"
+        "pg": "^8.13.1",
+        "xss": "^1.0.14"
     },
     "devDependencies": {
         "@eslint/js": "^9.20.0",
         "eslint": "^9.20.0",
-        "globals": "^15.14.0"
+        "globals": "^15.14.0",
+        "cross-env": "^7.0.3",
+        "jest": "^29.7.0",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^3.2.2",
+        "stylelint": "^16.1.0",
+        "stylelint-config-standard": "^36.0.0"
     }
 }

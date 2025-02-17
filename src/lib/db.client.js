@@ -91,7 +91,6 @@ export class Database {
       client.release();
     }
   }
-
 }
 
 /** @type {Database | null} */

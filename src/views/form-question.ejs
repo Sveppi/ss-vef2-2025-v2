@@ -1,1 +1,30 @@
 <!-- Búa til formið hér, hafa texta reit fyrir spurningu, fjóra texta reiti fyrir svör (segja að einn sé correct), dropdown fyrir category -->
+<%- include('header') -%>
+
+<form method="post" action="/form-question">
+  <label for="name">Velja flokk: </label>
+
+  <select name="category" id="form_category" required>
+    <% for (const category of categories) { %>
+      <option value="<%= category.id %>"><%= category.name %></option>
+    <% } %>
+  </select>
+
+  <label>Spurning: <input type="text" id="form_question" name="question" placeholder="Skrifa spurningu..." required/></label>
+
+  <label>Svar 1: <input type="text" id="form_answer" name="answer1" placeholder="Skrifa svar..." required/></label>
+  <label>Rétt? <input type="radio" id="form_answer_correct" name="answer_correct" value="1" /></label>
+
+  <label>Svar 2: <input type="text" id="form_answer" name="answer2" placeholder="Skrifa svar..." required/></label>
+  <label>Rétt? <input type="radio" id="form_answer_correct" name="answer_correct" value="2" /></label>
+
+  <label>Svar 3: <input type="text" id="form_answer" name="answer3" placeholder="Skrifa svar..." required/></label>
+  <label>Rétt? <input type="radio" id="form_answer_correct" name="answer_correct" value="3" /></label>
+
+  <label>Svar 4: <input type="text" id="form_answer" name="answer4" placeholder="Skrifa svar..." required/></label>
+  <label>Rétt? <input type="radio" id="form_answer_correct" name="answer_correct" value="4" /></label>
+
+  <button type="submit">Senda inn</button>
+</form>
+
+<%- include('footer') -%>

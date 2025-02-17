@@ -1,4 +1,5 @@
 import pg from 'pg';
+import { seedDatabase, initDatabase } from './import.js';
 
 const { DATABASE_URL: connectionString } = process.env;
 
@@ -16,10 +17,12 @@ pool.on('error', (err) => {
   process.exit(1);
 });
 
+await initDatabase(pool);
+await seedDatabase(pool);
+
 export async function categoriesFromDatabase() {
   try {
     const result = await query('SELECT * FROM categories');
-    console.log('result :>> ', result);
     if (result?.rowCount > 0) {
       return result.rows;
     }
@@ -31,8 +34,9 @@ export async function categoriesFromDatabase() {
 }
 export async function categoryFromDatabase(categoryId) {
   try {
-    const result = await query('SELECT * FROM categories WHERE id = $1', [categoryId]);
-    console.log('result :>> ', result);
+    const result = await query('SELECT * FROM categories WHERE id = $1', [
+      categoryId,
+    ]);
     if (result?.rowCount > 0) {
       return result.rows[0];
     }
@@ -44,21 +48,33 @@ export async function categoryFromDatabase(categoryId) {
 }
 
 export async function questionsFromDatabase(categoryId) {
-  const result = await query(
-    'SELECT * FROM questions WHERE category_id = $1', [categoryId]);
-  console.log('result :>> ', result);
+  const result = await query('SELECT * FROM questions WHERE category_id = $1', [
+    categoryId,
+  ]);
+  if (result?.rowCount > 0) {
+    return result.rows;
+  } else {
+    return [];
+  }
+}
+
+export async function answersFromDatabase(questionId) {
+  const result = await query('SELECT * FROM answers WHERE question_id = $1', [
+    questionId,
+  ]);
   if (result?.rowCount > 0) {
     return result.rows;
   }
 }
 
-export async function answersFromDatabase(questionId) {
-  const result = await query(
-    'SELECT * FROM answers WHERE question_id = $1', [questionId]);
-  console.log('result :>> ', result);
-  if (result?.rowCount > 0) {
-    return result.rows;
-  }
+export async function getLatestQuestionId() {
+  const result = await query('SELECT MAX(id) AS latest_id FROM questions');
+  return result.rows[0].latest_id || 0;
+}
+
+export async function getLatestAnswerId() {
+  const result = await query('SELECT MAX(id) AS latest_id FROM answers');
+  return result.rows[0].latest_id || 0;
 }
 
 export async function query(q, values = []) {
@@ -66,7 +82,6 @@ export async function query(q, values = []) {
 
   try {
     client = await pool.connect();
-    console.log('Executing query:', q, 'with values:', values);
     const result = await client.query(q, values);
     console.log('Query result:', result);
     return result;
